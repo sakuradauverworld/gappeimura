@@ -3,13 +3,12 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"net/http"
 	"os"
 
-	//　追加
-	"example.com/m/api"
-	//　追加
-	"example.com/m/migrations"
+	"project/api"
+	"project/controllers"
+	"project/migrations"
+
 	_ "github.com/lib/pq"
 )
 
@@ -24,11 +23,8 @@ func main() {
 		panic(err)
 	}
 
-	//　追加
 	migrations.UsersMigrate(db)
-	//　追加
 	api.Users(db)
 
-	fmt.Println("Server is running on port 8080...")
-	http.ListenAndServe(":8080", nil)
+	controllers.StartMainServer()
 }
